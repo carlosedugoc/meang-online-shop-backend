@@ -1,0 +1,5 @@
+"TIPOS DE USUARIOS QUE TENEMOS"
+enum Role {
+    CLIENT
+    ADMIN
+}

@@ -1,0 +1,16 @@
+input UserInput {
+    "IdentificadoR Unico No Obligatorio"
+    id: ID
+    "Nombre de Pila"
+    name: String!
+    "Apellido"
+    lastname: String!
+    "Correo Electrónico"
+    email: String!
+    "Contraseña de usuario"
+    password: String!
+    "Fecha de Registro en la base de datos"
+    birthday: String!
+    "Permisos del usuario"
+    role: Role = CLIENT
+}

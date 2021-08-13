@@ -1,0 +1,8 @@
+"Definicion de los tipos de raiz"
+type Query {
+    "Listado de usuarios de la base de datos"
+    users: ResultUsers!
+    login(email:String!, password: String!): ResultLogin
+    me: ResultUser
+    products: Boolean
+}

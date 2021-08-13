@@ -1,8 +1,9 @@
 import { IResolvers } from '@graphql-tools/utils';
-import { COLLECTIONS, EXPIRETIME, MESSAGES } from '../config/constants';
-import JWT from '../lib/jwt';
-import { IUser } from '../interfaces/user.interface';
+import { COLLECTIONS, EXPIRETIME, MESSAGES } from '../../config/constants';
+import JWT from '../../lib/jwt';
+import { IUser } from '../../interfaces/user.interface';
 import bcrypt from 'bcrypt';
+import { findOneElement } from '../../lib/db-operations';
 
 
 interface UserResponse {
@@ -17,7 +18,7 @@ interface LoginResponse {
   token?: string | null;
 }
 
-const resolversQuery: IResolvers = {
+const resolversUserQuery: IResolvers = {
   Query: {
     async users(_, __, { db }): Promise<UserResponse> {
       try {
@@ -35,9 +36,9 @@ const resolversQuery: IResolvers = {
       }
     },
 
-    async login(_, { email, password }, { db }): Promise<LoginResponse> {
+    async login(_, { email, password }, { db }){
       try {
-        const user = await db.collection(COLLECTIONS.USERS).findOne({ email });
+        const user = await findOneElement(db, COLLECTIONS.USERS, {email});
         if (!user)
           return {
             status: false,
@@ -85,4 +86,4 @@ const resolversQuery: IResolvers = {
   },
 };
 
-export default resolversQuery;
+export default resolversUserQuery;
