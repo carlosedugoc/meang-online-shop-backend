@@ -13,9 +13,11 @@ class UserService extends ResolversOperationService {
     }
 
     public async items(){
-        const result = await this.list(this.collection, 'usuarios')
-        const {status, message, items: users} = result
-        return { status, message, users }
+      const page = this.getVariables().pagination?.page
+      const itemsPage = this.getVariables().pagination?.itemsPage
+      const result = await this.list(this.collection, 'usuarios', page, itemsPage)
+      const {status, message, items: users, info} = result
+      return { info, status, message, users }
     }
 
     async login() {

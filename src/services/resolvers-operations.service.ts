@@ -2,6 +2,7 @@ import { findElements, findOneElement, insertOneElement, updateOneElement, delet
 import { IContextData } from '../interfaces/context-data';
 import { IVariables } from '../interfaces/variables.interface';
 import { Db } from 'mongodb';
+import { pagination } from '../lib/pagination';
 
 export class ResolversOperationService {
     private root: object;
@@ -17,12 +18,19 @@ export class ResolversOperationService {
     protected getContext(): IContextData {return this.context}
     protected getDb(): Db {return this.context.db!}
 
-    protected async list(collection:string, listElement:string) {
+    protected async list(collection: string, listElement: string, page: number = 1, itemsPage: number = 1) {
         try {
+            const paginationData = await pagination(this.getDb(),collection,page, itemsPage)
             return {
+                info: {
+                    page:paginationData.page,
+                    pages:paginationData.pages,
+                    itemsPage:paginationData.itemsPage,
+                    total:paginationData.total,
+                },
                 status:true,
                 message: `Lista de ${listElement} cargada`,
-                items: await findElements(this.getDb(), collection)
+                items: await findElements(this.getDb(), collection,{}, paginationData)
             }
         } catch (error) {
             return {
