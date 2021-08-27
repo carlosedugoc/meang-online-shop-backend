@@ -1,10 +1,10 @@
-"Definicion de los tipos de raiz"
 type Query {
-    "Listado de usuarios de la base de datos"
     users(page:Int=1, itemsPage:Int=20): ResultUsers!
     login(email:String!, password: String!): ResultLogin
     me: ResultUser
     products: Boolean
     genres(page:Int=1, itemsPage:Int=20): ResultGenre
     genre(id:ID!): ResultGenre
+    tags(page: Int = 1, itemsPage: Int = 20, active: ActiveFilterEnum = ACTIVE): ResultTag
+    tag(id: ID!): ResultTag
 }
