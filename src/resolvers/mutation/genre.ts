@@ -11,6 +11,9 @@ const resolversGenreMutation: IResolvers = {
         },
         async deleteGenre(_, variables, context){
             return await new GenreService(_, variables, context).delete()
+        },
+        async blockGenre(_, variables, context){
+            return await new GenreService(_, variables, context).block()
         }
     }
 };

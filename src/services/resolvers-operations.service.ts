@@ -18,9 +18,9 @@ export class ResolversOperationService {
     protected getContext(): IContextData {return this.context}
     protected getDb(): Db {return this.context.db!}
 
-    protected async list(collection: string, listElement: string, page: number = 1, itemsPage: number = 1) {
+    protected async list(collection: string, listElement: string, page: number = 1, itemsPage: number = 20, filter: object = {active: {$ne: false}}) {
         try {
-            const paginationData = await pagination(this.getDb(),collection,page, itemsPage)
+            const paginationData = await pagination(this.getDb(),collection,page, itemsPage, filter)
             return {
                 info: {
                     page:paginationData.page,
@@ -30,7 +30,7 @@ export class ResolversOperationService {
                 },
                 status:true,
                 message: `Lista de ${listElement} cargada`,
-                items: await findElements(this.getDb(), collection,{}, paginationData)
+                items: await findElements(this.getDb(), collection, filter, paginationData)
             }
         } catch (error) {
             return {

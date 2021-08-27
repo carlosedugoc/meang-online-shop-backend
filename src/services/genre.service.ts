@@ -83,6 +83,21 @@ class GenreService extends ResolversOperationService {
         return { status, message }
     }
 
+    public async block(){
+        const id = this.getVariables().id
+        const genreToModify = this.getVariables().genre
+        if(!this.checkData(String(id) || '')){
+            return {
+                status: false,
+                message: 'El ID del género no se ha especificado correctamente',
+                genre: null
+            }
+        }
+        const result = await this.update(this.collection, {id}, {active:false}, 'genero' )
+        const {status} = result
+        return { status, message: status ? 'Bloqueado Correctamente' : 'No se ha bloqueado' }
+    }
+
     private checkData(value: string) {
         return (!value) ? false : true
     }
