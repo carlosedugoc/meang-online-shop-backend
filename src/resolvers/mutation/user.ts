@@ -13,7 +13,7 @@ const resolversRegisterMutation: IResolvers = {
       return await new UserService(_,{id},context).delete()
     },
     async blockUser(_, variables, context){
-      return await new UserService(_, variables, context).block()
+      return await new UserService(_, variables, context).unblock(false)
   }
   },
 };

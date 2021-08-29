@@ -8,8 +8,9 @@ class Database {
   async init() {
     await client.connect();
     const db = client.db();
-    console.log(`STATUS: ${chalk.greenBright('==========================DATABASE ONLINE===========================')}`);
-    console.log(`STATUS: ${chalk.greenBright(db.databaseName)}`);
+    console.log( chalk.blueBright('=================MONGODB DATABASE===================='));
+    console.log(`STATUS: ${chalk.greenBright('ONLINE')}`);
+    console.log(`DATABASE: ${chalk.greenBright(db.databaseName)}`);
     return db;
   }
 }
