@@ -12,8 +12,8 @@ const resolversRegisterMutation: IResolvers = {
     async deleteUser(_, {id}, context) {
       return await new UserService(_,{id},context).delete()
     },
-    async blockUser(_, variables, context){
-      return await new UserService(_, variables, context).unblock(false)
+    async blockUser(_, {id, unblock, admin}, context){
+      return await new UserService(_, {id}, context).unblock(unblock, admin)
   }
   },
 };

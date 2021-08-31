@@ -22,7 +22,7 @@ const resolversMailMutation: IResolvers = {
         async activeUserAction(_, {id, birthday, password}, {token, db}) {
             const verify = verifyToken(token, id);
             if(verify?.status === false) return {status:false, message: verify.message}
-            return new UserService(_, {id, user:{birthday, password}}, {token,db}).unblock(true)
+            return new UserService(_, {id, user:{birthday, password}}, {token,db}).unblock(true, false)
         },
 
         async resetPassword(_, {email}, {db}) {

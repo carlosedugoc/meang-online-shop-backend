@@ -1,6 +1,6 @@
 import { ResolversOperationService } from "./resolvers-operations.service";
 import { IContextData } from '../interfaces/context-data';
-import { COLLECTIONS, EXPIRETIME, MESSAGES } from '../config/constants';
+import { ACTIVE_VALUES_FILTER, COLLECTIONS, EXPIRETIME, MESSAGES } from '../config/constants';
 import { findOneElement, asignDocumentId } from '../lib/db-operations';
 import bcrypt from 'bcrypt';
 import JWT from "../lib/jwt";
@@ -14,10 +14,13 @@ class UserService extends ResolversOperationService {
         super(root, variables, context)
     }
 
-    public async items(){
+    public async items(active: string = ACTIVE_VALUES_FILTER.ACTIVE){
       const page = this.getVariables().pagination?.page
       const itemsPage = this.getVariables().pagination?.itemsPage
-      const result = await this.list(this.collection, 'usuarios', page, itemsPage)
+      let filter: object = {active: {$ne:false}}
+      if (active ===  ACTIVE_VALUES_FILTER.ALL) filter = {}
+      if (active ===  ACTIVE_VALUES_FILTER.INACTIVE) filter = {active: false}
+      const result = await this.list(this.collection, 'usuarios', page, itemsPage, filter)
       const {status, message, items: users, info} = result
       return { info, status, message, users }
     }
@@ -161,7 +164,7 @@ class UserService extends ResolversOperationService {
     }
 
 
-  public async unblock(unblock: boolean){
+  public async unblock(unblock: boolean, admin: boolean){
     const id = this.getVariables().id
     const user = this.getVariables().user;
     if(!this.checkData(String(id) || '')){
@@ -177,9 +180,9 @@ class UserService extends ResolversOperationService {
         message: 'Debes cambiar el password',
       }
     }
-    let update = {active: unblock}
-    if(unblock){
-      update = Object.assign({}, {active: true}, 
+    let update = {active: unblock, admin}
+    if(unblock && !admin){
+      update = Object.assign({}, {active: true, admin}, 
         {
           birthday: user?.birthday, 
           password: bcrypt.hashSync(user?.password!, 10)
