@@ -14,6 +14,6 @@ type Mutation {
     sendEmail(mail: MailInput!): ResultMail
     activeUserEmail(id:ID!, email: String!): ResultMail
     activeUserAction(id:ID!, birthday: String!, password: String!): ResultMail
-    resetPassword(mail: String!): ResultMail
+    resetPassword(email: String!): ResultMail
     changePassword(id: ID!, password: String!): ResultUser
 }
