@@ -1,0 +1,29 @@
+type Mutation {
+    "Crea un usuario"
+    register(
+        "Información del usuario a crear"
+        user:UserInput
+    ): ResultUser
+
+    "Actualiza un usuario"
+    updateUser(
+        "Información del usuario a actualizar"
+        user:UserInput!
+    ): ResultUser
+
+    "Elimina un usuario"
+    deleteUser(
+        "Id del usuario a eliminar"
+        id: ID!
+    ): ResultUser
+
+    "Bloquea o Desbloquea un usuario"
+    blockUser(
+        "Id del usuario a bloquear o desbloquear"
+        id: ID!, 
+        "Indica si realiza un bloqueo o desbloqueo"
+        unblock: Boolean = false, 
+        "Indica si el que realiza la acción es Administrador o no"
+        admin: Boolean= false
+    ): ResultGenre
+}

@@ -1,0 +1,15 @@
+type Query {
+    "Listado de géneros"
+    genres(
+        "Página seleccionada"
+        page:Int=1, 
+        "Cantidad de registros a mostrar por página"
+        itemsPage:Int=20, 
+    ): ResultGenre
+
+    "Genero buscado"
+    genre(
+        "Id del género a buscar"
+        id:ID!
+    ): ResultGenre
+}

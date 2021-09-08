@@ -1,0 +1,17 @@
+type Query {
+    "Listado de Tags"
+    tags(
+        "Página seleccionada"
+        page:Int=1, 
+        "Cantidad de registros a mostrar por página"
+        itemsPage:Int=20, 
+        "Estado del tag que se quiere mostrar"
+        active: ActiveFilterEnum = ACTIVE
+    ): ResultTag
+
+    "Tag a buscar"
+    tag(
+        "Id del tag a buscar"
+        id: ID!
+    ): ResultTag
+}

@@ -1,0 +1,27 @@
+type Mutation {
+    "Agrega un Género"
+    addGenre(
+        "Nombre del Género"
+        genre: String!
+    ): ResultGenre
+
+    "Actualiza un Género"
+    updateGenre(
+        "Id del género a actualizar"
+        id: ID!, 
+        "Nuevo nombre del género a actualizar"
+        genre: String!
+    ): ResultGenre
+
+    "Elimina un Género"
+    deleteGenre(
+        "Id del género a eliminar"
+        id: ID!
+    ): ResultGenre
+
+    "Bloquea un Género"
+    blockGenre(
+        "Id del género a bloquear"
+        id: ID!
+    ): ResultGenre
+}

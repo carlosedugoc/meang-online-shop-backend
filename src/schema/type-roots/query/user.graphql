@@ -1,0 +1,20 @@
+type Query {
+    "Listado de usuarios"
+    users(
+        "Página seleccionada"
+        page:Int=1, 
+        "Cantidad de registros a mostrar por página"
+        itemsPage:Int=20, 
+        "Estado del tag que se quiere mostrar"
+        active: ActiveFilterEnum = ACTIVE
+    ): ResultUsers!
+
+    "Inicio de sesión del usuario"
+    login(
+        "Correo electrónico del usuario"
+        email:String!, 
+        "Contraseña del usuario"
+        password: String!): ResultLogin
+    
+    me: ResultUser
+}

@@ -1,0 +1,45 @@
+type Query {
+    "Lista de productos de la tienda"
+    shopProducts(
+        "Página seleccionada"
+        page:Int=1, 
+        "Cantidad de registros a mostrar por página"
+        itemsPage:Int=20, 
+        "Estado del producto que se quiere mostrar"
+        active: ActiveFilterEnum=ACTIVE
+    ): ResultShopProduct
+
+    "Lista de productos por plataforma"
+    shopProductsPlatform(
+        "Página seleccionada"
+        page:Int=1, 
+        "Cantidad de registros a mostrar por página"
+        itemsPage:Int=20, 
+        "Estado del producto que se quiere mostrar"
+        active: ActiveFilterEnum=ACTIVE
+        "Id de la plataforma seleccionada"
+        platform: ID!,
+        "Selecciona los registros aleatoriamente"
+        random: Boolean = false
+    ): ResultShopProduct
+
+    
+    "Lista de productos por plataforma"
+    shopProductsOffersLast(
+        "Página seleccionada"
+        page:Int=1, 
+        "Cantidad de registros a mostrar por página"
+        itemsPage:Int=20, 
+        "Estado del producto que se quiere mostrar"
+        active: ActiveFilterEnum=ACTIVE
+        "Tope del precio para considerar como oferta"
+        topPrice: Float = -1
+        "Tope para especificar por debajo que hay poco stock"
+        lastUnits: Int = -1
+        "Selecciona los registros aleatoriamente"
+        random: Boolean = false
+    ): ResultShopProduct
+
+
+
+}
