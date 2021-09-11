@@ -30,7 +30,7 @@ const resolversShopProductQuery: IResolvers = {
 
       return new ShopProductService(_,{
         pagination: {page, itemsPage}
-      }, context).items(active, '', random, otherFilters)
+      }, context).items(active, ['-1'], random, otherFilters)
 
     }
   },

@@ -11,7 +11,7 @@ class ShopProductService extends ResolversOperationService {
 
     public async items(
         active: string = ACTIVE_VALUES_FILTER.ACTIVE, 
-        platform: string = '', 
+        platform: Array<string> = ['-1'], 
         random: boolean =false,
         otherFilters: object = {}){
         const page = this.getVariables().pagination?.page
@@ -19,7 +19,7 @@ class ShopProductService extends ResolversOperationService {
         let filter: object = {active: {$ne:false}}
         if (active ===  ACTIVE_VALUES_FILTER.ALL) filter = {}
         if (active ===  ACTIVE_VALUES_FILTER.INACTIVE) filter = {active: false}
-        if (platform) filter = {...filter, ...{platform_id: platform}}
+        if (platform[0] !== '-1') filter = {...filter, ...{platform_id: { $in: platform}}}
         if (otherFilters !== {} && otherFilters !== undefined) filter = {...filter, ...otherFilters}
         if(!random){
             const result = await this.list(this.collection, 'Productos de la tienda', page, itemsPage, filter)
