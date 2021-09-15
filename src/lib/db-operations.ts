@@ -30,7 +30,13 @@ export const findElements = async (
     database: Db,
     collection: string,
     filter: object = {},
-    paginationOptions: IPaginationOptions
+    paginationOptions: IPaginationOptions = {
+        page: 1,
+        pages: 1,
+        itemsPage: -1,
+        skip: 0,
+        total: -1
+      }
 ) => {
     if(paginationOptions.total === -1) return await database.collection(collection).find(filter).toArray()
     return await database.collection(collection).find(filter).limit(paginationOptions.itemsPage).skip(paginationOptions.skip).toArray()

@@ -41,7 +41,13 @@ class ShopProductService extends ResolversOperationService {
             message: "Información cargada correctamente",
             shopProducts: result
         }
-      }
+    }
+
+    public async details() {
+        const result = await this.get(this.collection)
+        const {status, message, item: shopProduct} = result
+        return { status, message, shopProduct }
+    }
 
 }
 

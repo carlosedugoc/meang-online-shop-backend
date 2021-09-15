@@ -40,6 +40,9 @@ type Query {
         random: Boolean = false
     ): ResultShopProduct
 
+    "Detalles del producto seleccionado"
+    shopProductDetails(id: Int!): ResultShopProduct
+
 
 
 }
