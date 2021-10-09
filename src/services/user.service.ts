@@ -5,7 +5,7 @@ import { findOneElement, asignDocumentId } from '../lib/db-operations';
 import bcrypt from 'bcrypt';
 import JWT from "../lib/jwt";
 import { IUser } from '../interfaces/user.interface';
-import { IMailOoptions } from "../interfaces/email.interface";
+import { IMailOptions } from "../interfaces/email.interface";
 import MailService from "./mail.service";
 
 class UserService extends ResolversOperationService {
@@ -200,7 +200,7 @@ class UserService extends ResolversOperationService {
     if(!email) return {status: false, message: 'El EMail no se ha definido'}
     const token = new JWT().sign({user: {id, email}}, EXPIRETIME.H1)
     const html = `Para activar la cuenta haz <a href="${process.env.CLIENT_URL}/#/active/${token}">click aquí</a>`
-    const mail: IMailOoptions = {
+    const mail: IMailOptions = {
         subject: 'Activar Usuario',
         to: email,
         html

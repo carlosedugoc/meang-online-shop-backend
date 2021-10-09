@@ -2,7 +2,7 @@ import { COLLECTIONS, EXPIRETIME } from "../config/constants";
 import { IContextData } from "../interfaces/context-data";
 import { findOneElement, updateOneElement } from '../lib/db-operations';
 import { ResolversOperationService } from "./resolvers-operations.service";
-import { IMailOoptions } from '../interfaces/email.interface';
+import { IMailOptions } from '../interfaces/email.interface';
 import MailService from "./mail.service";
 import JWT from "../lib/jwt";
 import bcrypt from 'bcrypt';
@@ -29,7 +29,7 @@ class PasswordService extends ResolversOperationService {
         }
         const token = new JWT().sign({user: newUser}, EXPIRETIME.M15)
         const html = `Para cambiar la contraseña haz <a href="${process.env.CLIENT_URL}/#/reset/${token}">click aquí</a>`
-        const mail: IMailOoptions = {
+        const mail: IMailOptions = {
             subject: 'Cambiar Contraseña',
             to: email,
             html

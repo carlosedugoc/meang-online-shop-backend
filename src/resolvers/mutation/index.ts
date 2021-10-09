@@ -1,16 +1,18 @@
-import resolversRegisterMutation from "./user";
+import resolversUserMutation from './user';
 import resolversGenreMutation from './genre';
 import resolversTagMutation from './tag';
-import resolversMailMutation from "./email";
-
+import resolversMailMutation from './email';
+import mutationStripeResolvers from './stripe';
+import resolversShopProductMutation from './shop-product';
 const GMR = require('@wiicamp/graphql-merge-resolvers')
 
 const mutationResolvers = GMR.merge([
-    resolversRegisterMutation,
+    resolversUserMutation,
     resolversGenreMutation,
     resolversTagMutation,
-    resolversMailMutation
+    resolversMailMutation,
+    mutationStripeResolvers,
+    resolversShopProductMutation
 ]);
 
-export default mutationResolvers
-
+export default mutationResolvers;

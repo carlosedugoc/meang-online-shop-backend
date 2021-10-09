@@ -1,12 +1,8 @@
 import { IResolvers } from '@graphql-tools/utils';
-import { COLLECTIONS, EXPIRETIME, MESSAGES } from '../../config/constants';
-import { transport } from '../../config/mailer';
+import { MESSAGES } from '../../config/constants';
 import JWT from '../../lib/jwt';
 import UserService from '../../services/user.service';
-import { findOneElement, updateOneElement } from '../../lib/db-operations';
-import bcrypt from 'bcrypt';
 import MailService from '../../services/mail.service';
-import { IMailOoptions } from '../../interfaces/email.interface';
 import PasswordService from '../../services/password.service';
 
 const resolversMailMutation: IResolvers = {
