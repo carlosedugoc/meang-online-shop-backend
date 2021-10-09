@@ -1,8 +1,9 @@
-import { COLLECTIONS, ACTIVE_VALUES_FILTER } from '../config/constants';
+import { COLLECTIONS, ACTIVE_VALUES_FILTER, SUBSCRIPTIONS_EVENT } from '../config/constants';
 import { IContextData } from "../interfaces/context-data";
 import { ResolversOperationService } from "./resolvers-operations.service";
 import { randomItems, manageStockUpdate, findOneElement } from '../lib/db-operations';
 import { IStock } from '../interfaces/stock.interface';
+import { PubSub } from 'graphql-subscriptions';
 
 class ShopProductService extends ResolversOperationService {
     collection = COLLECTIONS.SHOP_PRODUCT;
@@ -50,32 +51,28 @@ class ShopProductService extends ResolversOperationService {
         return { status, message, shopProduct }
     }
 
-    async updateStock(updateList: Array<IStock>) {
+    async updateStock(updateList: Array<IStock>, pubsub: PubSub) {
+      console.log(updateList, pubsub)
         try {
           updateList.map(async(item: IStock) => {
+            console.log(item);
+            const itemDetails: any = await findOneElement(
+              this.getDb(), COLLECTIONS.SHOP_PRODUCT,
+              { id: +item.id}
+            );
+            if(item.increment < 0 && ((item.increment + itemDetails.stock) < 0)) {
+              item.increment = -itemDetails.stock;
+            }
             await manageStockUpdate(
               this.getDb(),
               COLLECTIONS.SHOP_PRODUCT,
               {id: +item.id},
               {stock: item.increment}
             );
-            // console.log(item);
-            // const itemDetails = await findOneElement(
-            //   this.getDb(), COLLECTIONS.SHOP_PRODUCT,
-            //   { id: +item.id}
-            // );
-            // if(item.increment < 0 && ((item.increment + itemDetails.stock) < 0)) {
-            //   item.increment = -itemDetails.stock;
-            // }
-            // await manageStockUpdate(
-            //   this.getDb(),
-            //   COLLECTIONS.SHOP_PRODUCT,
-            //   {id: +item.id},
-            //   {stock: item.increment}
-            // );
-            // itemDetails.stock += item.increment; 
-            // pubsub.publish(SUBSCRIPTIONS_EVENT.UPDATE_STOCK_PRODUCT, 
-            //   { selectProductStockUpdate: itemDetails});
+            itemDetails.stock += item.increment; 
+            console.log(itemDetails.stock)
+            pubsub.publish(SUBSCRIPTIONS_EVENT.UPDATE_STOCK_PRODUCT, 
+              { selectProductStockUpdate: itemDetails});
           });
           return true;
         } catch (e) {

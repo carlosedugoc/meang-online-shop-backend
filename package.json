@@ -48,6 +48,7 @@
     "graphql": "^15.5.1",
     "graphql-import-node": "0.0.4",
     "graphql-playground-middleware-express": "^1.7.22",
+    "graphql-subscriptions": "^1.2.1",
     "graphql-tools": "^8.1.0",
     "jsonwebtoken": "^8.5.1",
     "mongodb": "^4.1.0",
@@ -56,6 +57,7 @@
     "nodemailer": "^6.6.3",
     "slugify": "^1.6.0",
     "stripe": "^8.179.0",
+    "subscriptions-transport-ws": "^0.9.19",
     "typescript": "^4.3.5"
   },
   "devDependencies": {
