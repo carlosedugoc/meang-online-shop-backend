@@ -52,10 +52,8 @@ class ShopProductService extends ResolversOperationService {
     }
 
     async updateStock(updateList: Array<IStock>, pubsub: PubSub) {
-      console.log(updateList, pubsub)
         try {
           updateList.map(async(item: IStock) => {
-            console.log(item);
             const itemDetails: any = await findOneElement(
               this.getDb(), COLLECTIONS.SHOP_PRODUCT,
               { id: +item.id}
@@ -70,7 +68,6 @@ class ShopProductService extends ResolversOperationService {
               {stock: item.increment}
             );
             itemDetails.stock += item.increment; 
-            console.log(itemDetails.stock)
             pubsub.publish(SUBSCRIPTIONS_EVENT.UPDATE_STOCK_PRODUCT, 
               { selectProductStockUpdate: itemDetails});
           });

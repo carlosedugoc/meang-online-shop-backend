@@ -1,6 +1,6 @@
 import 'graphql-import-node';
 import resolvers from './../resolvers';
-import { makeExecutableSchema } from 'graphql-tools';
+import { makeExecutableSchema } from '@graphql-tools/schema';
 import { GraphQLSchema } from 'graphql';
 
 import { loadFilesSync } from '@graphql-tools/load-files';
