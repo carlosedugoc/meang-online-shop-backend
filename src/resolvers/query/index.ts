@@ -3,6 +3,7 @@ import resolversShopProductsQuery from './shop-product';
 import resolversGenreQuery from './genre';
 import resolversTagQuery from './tag';
 import queryStripeResolvers from './stripe';
+import resolversDashboardQuery from './dashboard';
 
 const GMR = require('@wiicamp/graphql-merge-resolvers')
 
@@ -12,7 +13,8 @@ const queryResolvers = GMR.merge([
     resolversGenreQuery,
     resolversTagQuery,
     // Stripe
-    queryStripeResolvers
+    queryStripeResolvers,
+    resolversDashboardQuery
 ]);
 
 export default queryResolvers;
